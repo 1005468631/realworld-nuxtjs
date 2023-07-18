@@ -36,7 +36,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputsobject, which include a `upload_url`. See this blog post for more info:https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-futuresteps
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./release.tgz
           asset_name: release.tgz
           asset_content_type: application/x-tgz
@@ -51,6 +51,6 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /root/pm2-test 
-            wget https://github.com/lipengzhou/realworldnuxtjs/releases/latest/download/release.tgz -O release.tgz 
+            wget https://github.com/1005468631/realworld-nuxtjs/releases/latest/download/release.tgz -O release.tgz 
             tar zxvf release.tgz npm install --production 
             pm2 reload pm2.config.json
