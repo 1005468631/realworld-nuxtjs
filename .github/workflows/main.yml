@@ -50,7 +50,8 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /root/pm2-test 
-            wget https://github.com/1005468631/realworld-nuxtjs/releases/latest/download/release.tgz -O release.tgz 
-            tar zxvf release.tgz npm install --production 
+            cd /root/realworld-nuxtjs
+            wget https://github.com/1005468631/realworld-nuxtjs/releases/latest/download/release.tgz -O release.tgz
+            tar zxvf release.tgz
+            npm install --production
             pm2 reload pm2.config.json
