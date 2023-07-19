@@ -2,11 +2,11 @@
   <div>
     <form class="card comment-form">
       <div class="card-block">
-        <textarea class="form-control" placeholder="Write a comment..." rows="3"></textarea>
+        <textarea class="form-control" v-model="review" placeholder="Write a comment..." rows="3"></textarea>
       </div>
       <div class="card-footer">
         <img :src="user && user.image" class="comment-author-img" />
-        <button class="btn btn-sm btn-primary">Post Comment</button>
+        <button class="btn btn-sm btn-primary" @click="add">Post Comment</button>
       </div>
     </form>
 
@@ -39,13 +39,16 @@
           {{ comment.author.username }}
         </nuxt-link>
         <span class="date-posted">{{ comment.createdAt | date('MMM DD, YYYY') }}</span>
+        <span class="mod-options">
+          <i class="ion-trash-a" @click="del(comment.id)"></i>
+        </span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getComments } from '@/api/article'
+import { getComments, addComments, delComments } from '@/api/article'
 import { mapState } from 'vuex'
 
 export default {
@@ -59,6 +62,7 @@ export default {
   data() {
     return {
       comments: [],
+      review: '',
     }
   },
   async mounted() {
@@ -67,6 +71,29 @@ export default {
   },
   computed: {
     ...mapState(['user']),
+  },
+  methods: {
+    async add() {
+      if (this.review == '') return false
+      const model = {
+        slug: this.article.slug,
+        data: {
+          comment: {
+            body: this.review,
+          },
+        },
+      }
+      await addComments(model)
+    },
+    async del(id) {
+      const model = {
+        slug: this.article.slug,
+        id,
+      }
+      await delComments(model)
+      const index = this.comments.findIndex(w => w.id == id)
+      this.comments.splice(index, 1)
+    },
   },
 }
 </script>

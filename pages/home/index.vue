@@ -175,7 +175,7 @@ import { getTags } from '@/api/tag'
 
 export default {
   name: 'HomeIndex',
-  watchQuery: ['page', 'tag'],
+  watchQuery: ['page', 'tag', 'tab'],
   async asyncData({ query, store }) {
     const page = Number(query.page || 1)
     const { tag } = query

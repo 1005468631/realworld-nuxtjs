@@ -3,18 +3,23 @@
     <div class="banner">
       <div class="container">
         <h1>{{ article.title }}</h1>
-        <article-meta :article="article" />
+        <article-meta :article="article" :slug="slug" />
       </div>
     </div>
     <div class="container page">
       <div class="row article-content">
         <div class="col-md-12" v-html="article.body"></div>
+        <ul class="tag-list">
+          <li class="tag-default tag-pill tag-outline" v-for="item in article.tagList" :key="item">
+            {{ item }}
+          </li>
+        </ul>
       </div>
       <hr />
       <div class="article-actions">
-        <article-meta :article="article" />
+        <article-meta :article="article" :slug="slug" />
       </div>
-      <div class="row">
+      <div class="row" v-if="$store.state.user">
         <div class="col-xs-12 col-md-8 offset-md-2">
           <article-comments :article="article" />
         </div>
@@ -38,6 +43,7 @@ export default {
     article.body = md.render(article.body)
     return {
       article,
+      slug: params.slug,
     }
   },
   components: {

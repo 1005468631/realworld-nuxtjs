@@ -15,3 +15,18 @@ export const register = data => {
     data,
   })
 }
+
+export const getUser = () => {
+  return request({
+    method: 'GET',
+    url: '/api/user',
+  })
+}
+
+export const UpdateUser = data => {
+  return request({
+    method: 'PUT',
+    url: '/api/user',
+    data,
+  })
+}
